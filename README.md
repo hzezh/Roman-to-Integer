@@ -1,67 +1,44 @@
-# Roman-to-Integer
-class Solution:
-    def romanToInt(self, input_str: str) -> int:
-        roman_map = {
-          "I": 1,
-          "V": 5,
-          "X": 10,
-          "L": 50,
-          "C": 100,
-          "D": 500,
-          "M": 1000
-        }
-        length_Str = len(input_str)
+# LeetCode Problem
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
 
-        sum = 0
-        should_skip = False
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+For example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
 
-        for index in range(0,length_Str):
-          if should_skip == True:
-            should_skip = False
-            #print ('skipping')
-            continue
+Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
 
-          current= input_str[index]
+I can be placed before V (5) and X (10) to make 4 and 9. 
+X can be placed before L (50) and C (100) to make 40 and 90. 
+C can be placed before D (500) and M (1000) to make 400 and 900.
+Given a roman numeral, convert it to an integer.
 
-          #print(sum)
-          if index == length_Str - 1:
-            sum = sum + roman_map[current]
-            should_skip = False
-            #print(f'for last {sum}')
-            break
+ 
 
-          if current == 'I':
-            next = input_str[index+1]
-            if next == 'V' or next == 'X':
-              sum = sum + roman_map[next] - roman_map[current]
-              should_skip = True
-              #print(f'for I {sum}')
-            else:
-              sum = sum + roman_map[current]
+Example 1:
 
+Input: s = "III"
+Output: 3
+Explanation: III = 3.
+Example 2:
 
-          elif current == 'C':
-            next = input_str[index+1]
-            if next == 'D' or next == 'M':
-              sum = sum + roman_map[next] - roman_map[current]
-              should_skip = True
-              #print(f'for C {sum}')
-            else:
-              sum = sum + roman_map[current]
+Input: s = "LVIII"
+Output: 58
+Explanation: L = 50, V= 5, III = 3.
+Example 3:
 
-          elif current == 'X':
-            should_skip = False
-            next = input_str[index+1]
-            if next == 'L' or next == 'C':
-              sum = sum + roman_map[next] - roman_map[current]
-              should_skip = True
-              #print(f'for X {sum}')
-            else:
-              sum = sum + roman_map[current]
-              #print(f'for X else {sum}')
+Input: s = "MCMXCIV"
+Output: 1994
+Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+ 
 
+Constraints:
 
-          else:
-            #print('regular scenario')
-            sum = sum + roman_map[current]
-        return sum
+1 <= s.length <= 15
+s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').
+It is guaranteed that s is a valid roman numeral in the range [1, 3999].
